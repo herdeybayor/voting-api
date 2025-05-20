@@ -65,6 +65,38 @@ npm run start:dev
 
 The API will be available at http://localhost:4000 and the Swagger documentation at http://localhost:4000/docs.
 
+### Database Migrations
+
+The application supports automatic database migrations using Drizzle ORM:
+
+1. To generate migrations after schema changes:
+
+```bash
+npm run db:generate
+```
+
+This will create migration files in the `drizzle` directory.
+
+2. To apply migrations manually:
+
+```bash
+npm run db:migrate
+```
+
+3. To enable automatic migrations on application startup, set in your `.env` file:
+
+```
+AUTO_MIGRATE_DB=true
+```
+
+When enabled, the application will automatically apply pending migrations from the `drizzle` directory when it starts.
+
+4. To view the database with Drizzle Studio:
+
+```bash
+npm run db:studio
+```
+
 ### Using Docker
 
 To run the entire application stack (API, PostgreSQL, and SMTP server) with Docker:
@@ -130,6 +162,7 @@ See `.env.example` for the complete list of required environment variables. The 
 - JWT secrets and expiration times
 - SMTP configuration for emails
 - AWS S3 configuration for file uploads
+- `AUTO_MIGRATE_DB` to control automatic database migrations
 
 ## License
 
