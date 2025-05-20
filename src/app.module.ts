@@ -10,6 +10,7 @@ import { DatabaseModule } from './database/database.module';
 import { MailModule } from './mail/mail.module';
 import { UsersModule } from './users/users.module';
 import { AwsModule } from './aws/aws.module';
+import { VotingModule } from './voting/voting.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -69,6 +70,7 @@ import { AwsModule } from './aws/aws.module';
     UsersModule,
     MailModule,
     AwsModule,
+    VotingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
