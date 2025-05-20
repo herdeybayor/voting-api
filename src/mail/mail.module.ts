@@ -21,7 +21,7 @@ import { MailService } from './mail.service';
           },
         },
         defaults: {
-          from: `"${config.get('APP_NAME', 'Voting API')}" <${config.get('SMTP_FROM')}>`,
+          from: `"${config.get('APP_NAME', 'BD Voting API')}" <${config.get('SMTP_FROM')}>`,
         },
         template: {
           dir: join(__dirname, 'templates'),

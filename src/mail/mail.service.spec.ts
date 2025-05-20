@@ -10,7 +10,7 @@ describe('MailService', () => {
 
   beforeEach(async () => {
     sendMailMock = jest.fn().mockResolvedValue({});
-    getMock = jest.fn().mockReturnValue('Voting API');
+    getMock = jest.fn().mockReturnValue('BD Voting API');
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         MailService,
@@ -45,10 +45,10 @@ describe('MailService', () => {
 
       expect(sendMailMock).toHaveBeenCalledWith({
         to: email,
-        subject: 'Verify your Voting API account',
+        subject: 'Verify your BD Voting API account',
         template: 'verification',
         context: {
-          appName: 'Voting API',
+          appName: 'BD Voting API',
           email,
           otp,
           validityInMinutes: 15,
@@ -82,10 +82,10 @@ describe('MailService', () => {
 
       expect(sendMailMock).toHaveBeenCalledWith({
         to: email,
-        subject: 'Welcome to Voting API!',
+        subject: 'Welcome to BD Voting API!',
         template: 'welcome',
         context: {
-          appName: 'Voting API',
+          appName: 'BD Voting API',
           name,
         },
       });

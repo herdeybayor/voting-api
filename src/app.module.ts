@@ -30,7 +30,7 @@ import { VotingModule } from './voting/voting.module';
         SMTP_PASSWORD: Joi.string().required(),
         SMTP_FROM: Joi.string().email().required(),
         SMTP_SECURE: Joi.boolean().default(false),
-        APP_NAME: Joi.string().default('Voting API'),
+        APP_NAME: Joi.string().default('BD Voting API'),
         FRONTEND_URL: Joi.string().uri().required(),
         // JWT configuration
         JWT_SECRET: Joi.string().required(),

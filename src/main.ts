@@ -23,8 +23,8 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter(app.get(HttpAdapterHost)));
 
   const config = new DocumentBuilder()
-    .setTitle('Voting API')
-    .setDescription('The Voting API documentation')
+    .setTitle('BD Voting API')
+    .setDescription('The BD Voting API documentation')
     .setExternalDoc('Postman Collection', '/docs-json')
     .setVersion('1.0')
     .addBearerAuth()

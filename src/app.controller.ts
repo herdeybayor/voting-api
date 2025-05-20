@@ -18,7 +18,7 @@ export class AppController {
         status: { type: 'string', example: 'ok' },
         timestamp: { type: 'string', example: '2024-03-19T12:00:00.000Z' },
         uptime: { type: 'number', example: 3600 },
-        message: { type: 'string', example: 'Voting API API is running' },
+        message: { type: 'string', example: 'BD Voting API API is running' },
       },
     },
   })
@@ -27,7 +27,7 @@ export class AppController {
       status: 'ok',
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
-      message: 'Voting API API is running',
+      message: 'BD Voting API API is running',
     };
   }
 }
