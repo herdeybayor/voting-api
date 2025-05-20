@@ -14,9 +14,17 @@ describe('AppController', () => {
     appController = app.get<AppController>(AppController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+  describe('healthCheck', () => {
+    it('should return health check response', () => {
+      const response = appController.healthCheck();
+
+      expect(response).toMatchObject({
+        status: 'ok',
+        message: 'Voting API API is running',
+      });
+
+      expect(typeof response.timestamp).toBe('string');
+      expect(typeof response.uptime).toBe('number');
     });
   });
 });

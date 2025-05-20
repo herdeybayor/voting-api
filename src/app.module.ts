@@ -1,11 +1,15 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import Joi from 'joi';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
-import { ConfigService } from '@nestjs/config';
-import { DatabaseModule } from './database/database.module';
-import Joi from 'joi';
+import { AuthModule } from './auth/auth.module';
 import { EnvironmentVariables } from './common/interfaces/env';
+import { DatabaseModule } from './database/database.module';
+import { MailModule } from './mail/mail.module';
+import { UsersModule } from './users/users.module';
+import { AwsModule } from './aws/aws.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -61,6 +65,10 @@ import { EnvironmentVariables } from './common/interfaces/env';
         ssl: configService.getOrThrow('POSTGRES_SSL') === 'true',
       }),
     }),
+    AuthModule,
+    UsersModule,
+    MailModule,
+    AwsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
