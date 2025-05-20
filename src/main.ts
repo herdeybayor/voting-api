@@ -28,8 +28,8 @@ async function bootstrap() {
     .setExternalDoc('Postman Collection', '/docs-json')
     .setVersion('1.0')
     .addBearerAuth()
-    .addServer(`http://localhost:${process.env.PORT}`, 'Local Development')
     .addServer('https://bd-voting-api.server.sherifdeenadebayo.com', 'Production')
+    .addServer(`http://localhost:${process.env.PORT}`, 'Local Development')
     .build();
 
   const document = SwaggerModule.createDocument(app, config, {});
