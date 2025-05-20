@@ -25,7 +25,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Voting API')
     .setDescription('The Voting API documentation')
-    .setExternalDoc('Postman Collection', '/api-json')
+    .setExternalDoc('Postman Collection', '/docs-json')
     .setVersion('1.0')
     .addBearerAuth()
     .addServer(`http://localhost:${process.env.PORT}`, 'Local Development')
@@ -34,7 +34,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config, {});
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document);
 
   await app.listen(process.env.PORT ?? 4000);
 }
