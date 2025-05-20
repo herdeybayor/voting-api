@@ -29,8 +29,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth()
     .addServer(`http://localhost:${process.env.PORT}`, 'Local Development')
-    .addServer('https://api-dev.voting.com', 'Development')
-    .addServer('https://api.voting.com', 'Production')
+    .addServer('https://bd-voting-api.server.sherifdeenadebayo.com', 'Production')
     .build();
 
   const document = SwaggerModule.createDocument(app, config, {});
