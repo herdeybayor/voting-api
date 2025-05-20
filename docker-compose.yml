@@ -10,10 +10,10 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
   smtp4dev:
-    image: mailhog/mailhog:latest
+    image: rnwood/smtp4dev
     ports:
-      - '8025:8025'
-      - '1025:1025'
+      - '8025:80'
+      - '1025:25'
     networks:
       - app-network
 
