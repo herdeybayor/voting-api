@@ -1,6 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsOptional, IsString, MinLength, MaxLength } from 'class-validator';
 
+export class UploadProfileImageDto {
+  @ApiProperty({ type: 'string', format: 'binary', description: 'Profile image file' })
+  file: Express.Multer.File;
+}
+
 export class UpdateUserDto {
   @ApiProperty({ example: 'John', required: false })
   @IsString()

@@ -4,12 +4,16 @@ import { eq } from 'drizzle-orm';
 import { DrizzleService } from '../../database/drizzle.service';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { users } from 'src/database/schema';
+import { AwsService } from 'src/aws/aws.service';
 
 @Injectable()
 export class UsersService {
   private readonly logger = new Logger(UsersService.name);
 
-  constructor(private readonly drizzle: DrizzleService) {}
+  constructor(
+    private readonly drizzle: DrizzleService,
+    private readonly awsService: AwsService,
+  ) {}
 
   async findById(id: string) {
     const user = await this.drizzle.db.query.users.findFirst({
@@ -91,5 +95,42 @@ export class UsersService {
 
     this.logger.log(`User ${userId} has been soft deleted`);
     return deletedUser;
+  }
+
+  async uploadProfileImage(userId: string, file: Express.Multer.File) {
+    const user = await this.findById(userId);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    // Delete old image if exists
+    if (user.image) {
+      await this.awsService.deleteFileFromS3({ Location: user.image });
+    }
+
+    // Upload new image
+    const imageUrl = await this.awsService.uploadFileToS3({
+      folder: 'users',
+      file,
+      fileName: `profile-${userId}`,
+      ACL: 'public-read',
+    });
+
+    if (!imageUrl) {
+      throw new Error('Failed to upload image');
+    }
+
+    // Update user with new image URL
+    const [updatedUser] = await this.drizzle.db
+      .update(users)
+      .set({
+        image: imageUrl,
+        updatedAt: new Date(),
+      })
+      .where(eq(users.id, userId))
+      .returning();
+
+    return updatedUser;
   }
 }

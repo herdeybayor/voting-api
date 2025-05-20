@@ -1,10 +1,24 @@
-import { Body, Controller, Delete, Get, Logger, Put, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Logger,
+  Patch,
+  Put,
+  Req,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBearerAuth, ApiConsumes, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Serialize } from 'src/common/interceptors/serialize.interceptor';
+import { FileValidationPipe } from 'src/common/pipes/file-validation.pipe';
 import RequestWithUser from '../auth/request-with-user.interface';
 import { DeleteAccountDto } from './dto/delete-account.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto, UploadProfileImageDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UsersService } from './services/users.service';
 
@@ -53,5 +67,24 @@ export class UsersController {
   @ApiResponse({ status: 401, description: 'Invalid password' })
   async deleteSelf(@Req() req: RequestWithUser, @Body() deleteAccountDto: DeleteAccountDto) {
     return this.usersService.deleteSelf(req.user.id, deleteAccountDto.password);
+  }
+
+  @Patch('me/profile-image')
+  @ApiOperation({ summary: 'Upload profile image' })
+  @ApiConsumes('multipart/form-data')
+  @ApiResponse({
+    status: 200,
+    description: 'Profile image uploaded successfully',
+    type: UserDto,
+  })
+  @ApiResponse({ status: 400, description: 'Invalid file' })
+  @UseInterceptors(FileInterceptor('file'))
+  @Serialize(UserDto)
+  async uploadProfileImage(
+    @Req() req: RequestWithUser,
+    @Body() _: UploadProfileImageDto,
+    @UploadedFile(new FileValidationPipe()) file: Express.Multer.File,
+  ) {
+    return await this.usersService.uploadProfileImage(req.user.id, file);
   }
 }

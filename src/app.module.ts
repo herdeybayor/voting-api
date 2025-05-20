@@ -5,12 +5,11 @@ import Joi from 'joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { AwsModule } from './aws/aws.module';
 import { EnvironmentVariables } from './common/interfaces/env';
 import { DatabaseModule } from './database/database.module';
 import { MailModule } from './mail/mail.module';
 import { UsersModule } from './users/users.module';
-
+import { AwsModule } from './aws/aws.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
