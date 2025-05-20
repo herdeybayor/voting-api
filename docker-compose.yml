@@ -9,8 +9,6 @@ services:
       - app-network
     ports:
       - '${PORT:-4000}:4000'
-    volumes:
-      - ./uploads:/app/uploads
     depends_on:
       - postgres
       - smtp4dev

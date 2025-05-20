@@ -25,7 +25,7 @@ This API powers a voting system where users can create competitions, add candida
 - **ORM**: Drizzle ORM
 - **Authentication**: JWT
 - **API Documentation**: Swagger/OpenAPI
-- **File Upload**: Multer (for profile pictures)
+- **File Storage**: AWS S3 for storing profile pictures and other uploads
 - **Email**: SMTP service for email verification
 - **Containerization**: Docker & Docker Compose
 
@@ -108,7 +108,7 @@ The documentation includes:
 - **Competition Management**: Create, update, view and delete competitions
 - **Voting**: One vote per user per competition
 - **User Management**: Profile updates, password resets
-- **File Upload**: Profile picture management with AWS S3 integration
+- **File Storage**: Direct upload to AWS S3 for profile pictures and other files
 - **Social Authentication**: Google and Apple OAuth support
 
 ## Database Schema
