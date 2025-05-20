@@ -159,6 +159,7 @@ Relations are managed through properly defined foreign keys with cascade deletio
 See `.env.example` for the complete list of required environment variables. The essential ones include:
 
 - Database connection details
+  - `POSTGRES_SSL`: Set to `true` for SSL connections to PostgreSQL. The application uses `{ rejectUnauthorized: false }` for SSL configuration, which allows connections to self-signed certificates.
 - JWT secrets and expiration times
 - SMTP configuration for emails
 - AWS S3 configuration for file uploads

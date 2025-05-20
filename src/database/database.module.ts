@@ -23,7 +23,11 @@ import { ConfigModule } from '@nestjs/config';
           user: databaseOptions.user,
           password: databaseOptions.password,
           database: databaseOptions.database,
-          ssl: databaseOptions.ssl,
+          ssl: databaseOptions.ssl
+            ? {
+                rejectUnauthorized: false,
+              }
+            : false,
         });
       },
     },

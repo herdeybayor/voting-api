@@ -4,6 +4,7 @@ import 'dotenv/config';
 import { EnvironmentVariables } from './src/common/interfaces/env';
 
 const configService = new ConfigService<EnvironmentVariables>();
+const useSsl = configService.getOrThrow('POSTGRES_SSL') === 'true';
 
 export default defineConfig({
   schema: './src/**/*.schema.ts',
@@ -15,6 +16,6 @@ export default defineConfig({
     user: configService.getOrThrow('POSTGRES_USER'),
     password: configService.getOrThrow('POSTGRES_PASSWORD'),
     database: configService.getOrThrow('POSTGRES_DB'),
-    ssl: configService.getOrThrow('POSTGRES_SSL') === 'true',
+    ssl: useSsl ? { rejectUnauthorized: false } : false,
   },
 });
