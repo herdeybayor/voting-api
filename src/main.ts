@@ -1,8 +1,41 @@
-import { NestFactory } from '@nestjs/core';
+import { LogLevel, ValidationPipe } from '@nestjs/common';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
 import { AppModule } from './app.module';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+  const isProduction = process.env.NODE_ENV === 'production';
+  const logLevels: LogLevel[] = isProduction
+    ? ['fatal', 'error', 'warn', 'log']
+    : ['fatal', 'error', 'warn', 'log', 'debug', 'verbose'];
+
+  const app = await NestFactory.create(AppModule, {
+    logger: logLevels,
+  });
+
+  app.useGlobalPipes(new ValidationPipe());
+
+  const reflector = app.get('Reflector');
+  app.useGlobalGuards(new JwtAuthGuard(reflector));
+  app.useGlobalFilters(new AllExceptionsFilter(app.get(HttpAdapterHost)));
+
+  const config = new DocumentBuilder()
+    .setTitle('Voting API')
+    .setDescription('The Voting API documentation')
+    .setExternalDoc('Postman Collection', '/api-json')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .addServer(`http://localhost:${process.env.PORT}`, 'Local Development')
+    .addServer('https://api-dev.voting.com', 'Development')
+    .addServer('https://api.voting.com', 'Production')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config, {});
+  SwaggerModule.setup('api', app, document);
+
+  await app.listen(process.env.PORT ?? 4000);
 }
 bootstrap();

@@ -19,7 +19,7 @@ export interface EnvironmentVariables {
   APPLE_CLIENT_ID: string;
   APPLE_TEAM_ID: string;
   APPLE_KEY_ID: string;
-  APPLE_PRIVATE_KEY_PATH: string;
+  APPLE_PRIVATE_KEY: string;
   APPLE_CALLBACK_URL: string;
   GOOGLE_CLIENT_ID: string;
   GOOGLE_CLIENT_SECRET: string;
