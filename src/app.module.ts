@@ -23,6 +23,7 @@ import { VotingModule } from './voting/voting.module';
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_DB: Joi.string().required(),
         POSTGRES_SSL: Joi.boolean().required(),
+        AUTO_MIGRATE_DB: Joi.boolean().default(false),
         // Mail configuration
         SMTP_HOST: Joi.string().required(),
         SMTP_PORT: Joi.number().required(),

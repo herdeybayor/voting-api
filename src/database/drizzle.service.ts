@@ -7,12 +7,17 @@ import { DrizzleCustomLogger } from './drizzle.logger';
 import { Database } from './interfaces/database-options.interface';
 import * as databaseSchema from './schema';
 import * as relations from './relations';
+import { MigrationService } from './migration.service';
+
 @Injectable()
 export class DrizzleService implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(DrizzleService.name);
   public db: Database;
 
-  constructor(@Inject(CONNECTION_POOL) private readonly pool: Pool) {
+  constructor(
+    @Inject(CONNECTION_POOL) private readonly pool: Pool,
+    private readonly migrationService: MigrationService,
+  ) {
     this.db = drizzle(this.pool, {
       schema: { ...databaseSchema, ...relations },
       logger: new DrizzleCustomLogger(),
@@ -25,6 +30,9 @@ export class DrizzleService implements OnModuleInit, OnModuleDestroy {
       // Test the connection
       await this.pool.query('SELECT 1');
       this.logger.log('Database connection established');
+
+      // Run migrations if enabled
+      await this.migrationService.runMigrations(this.pool);
     } catch (error) {
       this.logger.error('Failed to connect to the database', error);
       throw error;

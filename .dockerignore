@@ -1,0 +1,39 @@
+# Git
+.git
+.gitignore
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules
+
+# Testing
+coverage
+.nyc_output
+test
+
+# Environment (but allow .env.example)
+.env
+.env.local
+.env.*
+!.env.example
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build (if we build locally)
+# dist
+
+# Other
+.npm
+.eslintcache 

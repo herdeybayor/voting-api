@@ -5,6 +5,7 @@ export interface EnvironmentVariables {
   POSTGRES_PASSWORD: string;
   POSTGRES_DB: string;
   POSTGRES_SSL: boolean;
+  AUTO_MIGRATE_DB?: boolean;
   SMTP_HOST: string;
   SMTP_PORT: number;
   SMTP_USER: string;
