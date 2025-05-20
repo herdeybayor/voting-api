@@ -10,7 +10,7 @@ export class MailService {
   ) {}
 
   async sendVerificationEmail(email: string, otp: string) {
-    const appName = this.configService.get('APP_NAME', 'Voting API');
+    const appName = this.configService.get('APP_NAME', 'BD Voting API');
     await this.mailerService.sendMail({
       to: email,
       subject: `Verify your ${appName} account`,
@@ -44,7 +44,7 @@ export class MailService {
   }
 
   async sendWelcomeEmail(email: string, name: string) {
-    const appName = this.configService.get('APP_NAME', 'Voting API');
+    const appName = this.configService.get('APP_NAME', 'BD Voting API');
     await this.mailerService.sendMail({
       to: email,
       subject: `Welcome to ${appName}!`,

@@ -20,7 +20,7 @@ describe('AppController', () => {
 
       expect(response).toMatchObject({
         status: 'ok',
-        message: 'Voting API API is running',
+        message: 'BD Voting API API is running',
       });
 
       expect(typeof response.timestamp).toBe('string');

@@ -10,6 +10,7 @@ import { DatabaseModule } from './database/database.module';
 import { MailModule } from './mail/mail.module';
 import { UsersModule } from './users/users.module';
 import { AwsModule } from './aws/aws.module';
+import { VotingModule } from './voting/voting.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -29,7 +30,7 @@ import { AwsModule } from './aws/aws.module';
         SMTP_PASSWORD: Joi.string().required(),
         SMTP_FROM: Joi.string().email().required(),
         SMTP_SECURE: Joi.boolean().default(false),
-        APP_NAME: Joi.string().default('Voting API'),
+        APP_NAME: Joi.string().default('BD Voting API'),
         FRONTEND_URL: Joi.string().uri().required(),
         // JWT configuration
         JWT_SECRET: Joi.string().required(),
@@ -69,6 +70,7 @@ import { AwsModule } from './aws/aws.module';
     UsersModule,
     MailModule,
     AwsModule,
+    VotingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

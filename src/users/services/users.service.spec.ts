@@ -5,7 +5,7 @@ import { users } from '../../database/schema/users.schema';
 import { eq } from 'drizzle-orm';
 import { NotFoundException, UnauthorizedException, ForbiddenException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-
+import { AwsService } from 'src/aws/aws.service';
 jest.mock('bcrypt', () => ({
   compare: jest.fn().mockResolvedValue(true),
   hash: jest.fn().mockResolvedValue('hashedPassword'),
@@ -46,6 +46,12 @@ describe('UsersService', () => {
           provide: DrizzleService,
           useValue: {
             db: mockDb,
+          },
+        },
+        {
+          provide: AwsService,
+          useValue: {
+            uploadFile: jest.fn().mockResolvedValue('https://example.com/image.jpg'),
           },
         },
       ],
